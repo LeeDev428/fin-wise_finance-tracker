@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "FinWise",
+    "slug": "finwise-finance-tracker",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#E8E5B5"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.finwise.app"
+    },
+    "android": {
+      "package": "com.finwise.app"
+    },
+    "web": {
+    }
+  }
+}
