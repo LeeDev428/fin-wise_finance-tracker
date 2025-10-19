@@ -11,6 +11,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../context/AuthContext';
 import colors from '../constants/colors';
 
@@ -66,7 +67,7 @@ const LoginScreen = ({ navigation }) => {
 
           {/* Email Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.icon}>✉️</Text>
+            <Ionicons name="mail-outline" size={20} color="#999" style={styles.iconLeft} />
             <TextInput
               style={styles.input}
               placeholder="Email Address"
@@ -80,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
 
           {/* Password Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.icon}>🔒</Text>
+            <Ionicons name="lock-closed-outline" size={20} color="#999" style={styles.iconLeft} />
             <TextInput
               style={styles.input}
               placeholder="Password"
@@ -94,7 +95,11 @@ const LoginScreen = ({ navigation }) => {
               style={styles.eyeIcon}
               onPress={() => setShowPassword(!showPassword)}
             >
-              <Text style={styles.eyeText}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+              <Ionicons 
+                name={showPassword ? 'eye-outline' : 'eye-off-outline'} 
+                size={20} 
+                color="#999" 
+              />
             </TouchableOpacity>
           </View>
 
