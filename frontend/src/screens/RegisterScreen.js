@@ -78,7 +78,7 @@ const RegisterScreen = ({ navigation }) => {
 
           {/* Username Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.icon}>👤</Text>
+            <Ionicons name="person-outline" size={20} color="#999" style={styles.iconLeft} />
             <TextInput
               style={styles.input}
               placeholder="Username"
@@ -91,7 +91,7 @@ const RegisterScreen = ({ navigation }) => {
 
           {/* Email Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.icon}>✉️</Text>
+            <Ionicons name="mail-outline" size={20} color="#999" style={styles.iconLeft} />
             <TextInput
               style={styles.input}
               placeholder="Email Address"
@@ -105,7 +105,7 @@ const RegisterScreen = ({ navigation }) => {
 
           {/* Password Input */}
           <View style={styles.inputContainer}>
-            <Text style={styles.icon}>🔒</Text>
+            <Ionicons name="lock-closed-outline" size={20} color="#999" style={styles.iconLeft} />
             <TextInput
               style={styles.input}
               placeholder="Password"
@@ -119,7 +119,11 @@ const RegisterScreen = ({ navigation }) => {
               style={styles.eyeIcon}
               onPress={() => setShowPassword(!showPassword)}
             >
-              <Text style={styles.eyeText}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+              <Ionicons 
+                name={showPassword ? 'eye-outline' : 'eye-off-outline'} 
+                size={20} 
+                color="#999" 
+              />
             </TouchableOpacity>
           </View>
 
@@ -180,30 +184,32 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: {
-    fontSize: 28,
-    fontWeight: '300',
-    color: '#A8A8A8',
+    fontSize: 30,
+    fontWeight: '400',
+    color: '#9B9B9B',
     textAlign: 'center',
+    letterSpacing: 0.5,
   },
   titleAccent: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 'bold',
-    color: colors.accent,
+    color: '#8BC88B',
     textAlign: 'center',
+    letterSpacing: 0.5,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    borderRadius: 10,
+    backgroundColor: '#FAFAFA',
+    borderRadius: 12,
     marginBottom: 15,
     paddingHorizontal: 15,
-    height: 50,
+    height: 52,
+    borderWidth: 1,
+    borderColor: '#EFEFEF',
   },
-  icon: {
-    fontSize: 20,
-    marginRight: 10,
-    color: '#888',
+  iconLeft: {
+    marginRight: 12,
   },
   input: {
     flex: 1,
