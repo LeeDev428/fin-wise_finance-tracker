@@ -8,6 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../context/AuthContext';
 import colors from '../constants/colors';
 
@@ -36,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
             style={styles.menuButton}
             onPress={() => setMenuVisible(!menuVisible)}
           >
-            <Text style={styles.menuIcon}>☰</Text>
+            <Ionicons name="menu" size={28} color="#333" />
           </TouchableOpacity>
         </View>
 
@@ -105,20 +106,22 @@ const HomeScreen = ({ navigation }) => {
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navIcon}>🔔</Text>
-          <Text style={styles.navLabel}>notification</Text>
-          <View style={styles.notificationBadge}>
-            <Text style={styles.badgeText}>2</Text>
+          <View style={styles.navIconContainer}>
+            <Ionicons name="notifications" size={24} color="#FF6B6B" />
+            <View style={styles.notificationBadge}>
+              <Text style={styles.badgeText}>2</Text>
+            </View>
           </View>
+          <Text style={styles.navLabel}>notification</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navIcon}>🏆</Text>
+          <Ionicons name="trophy" size={24} color="#FFD93D" />
           <Text style={styles.navLabel}>reward</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navIconActive}>👤</Text>
+          <Ionicons name="person" size={24} color="#6BCB77" />
           <Text style={styles.navLabelActive}>profile</Text>
         </TouchableOpacity>
       </View>
@@ -337,32 +340,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  navIcon: {
-    fontSize: 28,
-    opacity: 0.5,
-  },
-  navIconActive: {
-    fontSize: 28,
-    opacity: 1,
+  navIconContainer: {
+    position: 'relative',
   },
   navLabel: {
     fontSize: 10,
-    color: colors.textLight,
-    marginTop: 2,
+    color: '#999',
+    marginTop: 4,
   },
   navLabelActive: {
     fontSize: 10,
-    color: colors.accent,
-    marginTop: 2,
+    color: '#6BCB77',
+    marginTop: 4,
+    fontWeight: '600',
   },
   notificationBadge: {
     position: 'absolute',
-    top: -5,
-    right: -5,
-    backgroundColor: colors.error,
-    borderRadius: 10,
-    width: 20,
-    height: 20,
+    top: -4,
+    right: -6,
+    backgroundColor: '#FF6B6B',
+    borderRadius: 8,
+    width: 16,
+    height: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
