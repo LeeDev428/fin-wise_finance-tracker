@@ -2,6 +2,7 @@
 // Use your computer's IP address for testing on phone
 // Change back to 'http://localhost:5000/api' for emulator testing
 const API_URL = 'http://192.168.8.38:5000/api';
+// const API_URL = 'http://192.168.0.36:5000/api'; --Mine WIFI:  ipconfig, ipconfig | findstr /i "IPv4"
 
 export default {
   API_URL,
