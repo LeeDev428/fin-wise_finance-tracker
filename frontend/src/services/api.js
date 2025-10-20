@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../config/api';
 
 class ApiService {
@@ -10,6 +11,20 @@ class ApiService {
         'Content-Type': 'application/json',
       },
     });
+
+    // Add request interceptor to attach token
+    this.api.interceptors.request.use(
+      async (config) => {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
   }
 
   setAuthToken(token) {
