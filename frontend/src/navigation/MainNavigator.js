@@ -14,6 +14,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ModulesScreen from '../screens/ModulesScreen';
 import QuizzesScreen from '../screens/QuizzesScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 import colors from '../constants/colors';
 
@@ -50,6 +51,7 @@ const MainNavigator = () => {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Modules" component={ModulesScreen} />
           <Stack.Screen name="Quizzes" component={QuizzesScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
         </>
       )}
     </Stack.Navigator>
