@@ -26,7 +26,7 @@ const LandingScreen = ({ navigation }) => {
         </View>
 
         {/* Main Heading */}
-        <View style={styles.heroSection}>
+        <View style={styles.heroSection }>
           <Text style={styles.mainHeading}>Empower Your Finances</Text>
           <Text style={styles.subHeading}>– Learn, Play, and Grow!</Text>
           <Text style={styles.description}>
