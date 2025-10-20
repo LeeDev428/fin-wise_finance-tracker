@@ -13,13 +13,13 @@ const HomeScreen = ({ navigation }) => {
     if (menuVisible) {
       Animated.timing(slideAnim, {
         toValue: 0,
-        duration: 300,
+        duration: 250,
         useNativeDriver: true,
       }).start();
     } else {
       Animated.timing(slideAnim, {
         toValue: -300,
-        duration: 300,
+        duration: 250,
         useNativeDriver: true,
       }).start();
     }
@@ -27,10 +27,9 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Modal visible={menuVisible} transparent={true} animationType='fade' onRequestClose={() => setMenuVisible(false)}>
-        <View style={styles.modalOverlay}>
-          <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={() => setMenuVisible(false)} />
-          <Animated.View style={[styles.drawer, { transform: [{ translateX: slideAnim }] }]}>
+      <Modal visible={menuVisible} transparent={true} animationType='none' onRequestClose={() => setMenuVisible(false)}>
+        <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={() => setMenuVisible(false)}>
+          <Animated.View style={[styles.drawer, { transform: [{ translateX: slideAnim }] }]} onStartShouldSetResponder={() => true}>
             <View style={styles.drawerHeader}>
               <Image source={require('../../assets/finwise-logo.png')} style={styles.drawerLogo} resizeMode='contain' />
               <Text style={styles.drawerTitle}>FinWise</Text>
@@ -46,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </Animated.View>
-        </View>
+        </TouchableOpacity>
       </Modal>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -66,14 +65,14 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.welcomeCard}>
-          <Text style={styles.greeting}>Hi, {user?.username || 'John'}!</Text>
-          <Text style={styles.subtitle}>Ready to grow your money smarts?</Text>
+          <Text style={[styles.greeting, { textAlign: 'center' }]}>Hi, {user?.username || 'John'}!</Text>
+          <Text style={[styles.subtitle, { textAlign: 'center' }]}>Ready to grow your money smarts?</Text>
           <View style={styles.progressContainer}>
             <View style={styles.progressCircleWrapper}>
-              <View style={[styles.progressSegment, styles.greenSegment]} />
-              <View style={[styles.progressSegment, styles.yellowSegment]} />
-              <View style={[styles.progressSegment, styles.orangeSegment]} />
-              <View style={[styles.progressSegment, styles.redSegment]} />
+              <View style={[styles.progressSegment, styles.topRightSegment]} />
+              <View style={[styles.progressSegment, styles.bottomRightSegment]} />
+              <View style={[styles.progressSegment, styles.bottomLeftSegment]} />
+              <View style={[styles.progressSegment, styles.topLeftSegment]} />
               <View style={styles.progressInner}>
                 <Text style={styles.progressText}>{progressPercentage}%</Text>
               </View>
@@ -134,9 +133,8 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#E8E5B5' },
-  modalOverlay: { flex: 1, flexDirection: 'row' },
-  overlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' },
-  drawer: { width: '75%', height: '100%', backgroundColor: 'white', paddingTop: 50, shadowColor: '#000', shadowOffset: { width: 2, height: 0 }, shadowOpacity: 0.3, shadowRadius: 10, elevation: 15 },
+  overlay: { flex: 1, backgroundColor: 'transparent', justifyContent: 'flex-start', alignItems: 'flex-start' },
+  drawer: { width: '75%', height: '100%', backgroundColor: 'white', paddingTop: 50, shadowColor: '#000', shadowOffset: { width: 2, height: 0 }, shadowOpacity: 0.3, shadowRadius: 10, elevation: 15, position: 'absolute', left: 0 },
   drawerHeader: { alignItems: 'center', paddingBottom: 30, borderBottomWidth: 1, borderBottomColor: '#eee', marginBottom: 20 },
   drawerLogo: { width: 80, height: 80, marginBottom: 10 },
   drawerTitle: { fontSize: 24, fontWeight: 'bold', color: '#333' },
@@ -157,11 +155,11 @@ const styles = StyleSheet.create({
   subtitle: { fontSize: 14, color: '#999', marginBottom: 25 },
   progressContainer: { alignItems: 'center', justifyContent: 'center' },
   progressCircleWrapper: { width: 150, height: 150, position: 'relative', justifyContent: 'center', alignItems: 'center' },
-  progressSegment: { position: 'absolute', width: 150, height: 150, borderRadius: 75, borderWidth: 12 },
-  greenSegment: { borderColor: 'transparent', borderTopColor: '#90EE90', transform: [{ rotate: '0deg' }] },
-  yellowSegment: { borderColor: 'transparent', borderRightColor: '#FFD700', transform: [{ rotate: '90deg' }] },
-  orangeSegment: { borderColor: 'transparent', borderBottomColor: '#FFB84D', transform: [{ rotate: '180deg' }] },
-  redSegment: { borderColor: 'transparent', borderLeftColor: '#FF6B6B', transform: [{ rotate: '270deg' }] },
+  progressSegment: { position: 'absolute', width: 75, height: 75, borderWidth: 12, borderColor: 'transparent' },
+  topRightSegment: { top: 0, right: 0, borderTopColor: '#90EE90', borderRightColor: '#90EE90', borderTopRightRadius: 75 },
+  bottomRightSegment: { bottom: 0, right: 0, borderBottomColor: '#FFD700', borderRightColor: '#FFD700', borderBottomRightRadius: 75 },
+  bottomLeftSegment: { bottom: 0, left: 0, borderBottomColor: '#FFB84D', borderLeftColor: '#FFB84D', borderBottomLeftRadius: 75 },
+  topLeftSegment: { top: 0, left: 0, borderTopColor: '#FF6B6B', borderLeftColor: '#FF6B6B', borderTopLeftRadius: 75 },
   progressInner: { width: 110, height: 110, borderRadius: 55, backgroundColor: '#FFE4B5', justifyContent: 'center', alignItems: 'center', zIndex: 10 },
   progressText: { fontSize: 32, fontWeight: 'bold', color: '#333' },
   featuresContainer: { flexDirection: 'row', paddingHorizontal: 20, justifyContent: 'space-between', marginBottom: 100 },
