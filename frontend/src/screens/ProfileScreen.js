@@ -106,7 +106,7 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { backgroundColor: 'transparent', borderBottomWidth: 0 }]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
@@ -118,15 +118,15 @@ const ProfileScreen = ({ navigation }) => {
       </View>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Profile Icon */}
-        <View style={styles.profileIconContainer}>
-          <View style={styles.profileIcon}>
-            <Ionicons name="person" size={60} color="#6CBBF7" />
-          </View>
-          <Text style={styles.usernameDisplay}>{user?.username}</Text>
-        </View>
+       
+            <View style={styles.profileIconContainer}>
+              <View style={[styles.profileIcon, { width: 80, height: 80, borderRadius: 50 }]}>
+                <Ionicons name="person" size={35} color="#6CBBF7" />
+              </View>
+              <Text style={styles.usernameDisplay}>{user?.username}</Text>
+            </View>
 
-        {/* Profile Form */}
+            {/* Profile Form */}
         <View style={styles.formContainer}>
           {/* Username Field */}
           <View style={styles.fieldContainer}>
