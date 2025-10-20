@@ -3,6 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthContext } from '../context/AuthContext';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 
+// Landing Screen
+import LandingScreen from '../screens/LandingScreen';
+
 // Auth Screens
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
@@ -35,8 +38,9 @@ const MainNavigator = () => {
       }}
     >
       {!isAuthenticated ? (
-        // Auth Stack
+        // Auth Stack - Landing screen first
         <>
+          <Stack.Screen name="Landing" component={LandingScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
         </>
