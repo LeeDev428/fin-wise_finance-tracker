@@ -19,10 +19,10 @@ const LandingScreen = ({ navigation }) => {
         <View style={styles.header}>
           <Image
             source={require('../../assets/finwise-logo.png')}
-            style={styles.logo}
+           style={[styles.logoSmall, { width: 140, height: 140 }]} 
             resizeMode="contain"
           />
-          <Text style={styles.appTitle}>FinWise</Text>
+        
         </View>
 
         {/* Main Heading */}
