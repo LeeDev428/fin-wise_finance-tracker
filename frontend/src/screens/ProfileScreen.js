@@ -7,17 +7,23 @@ import {
   TextInput,
   ScrollView,
   SafeAreaView,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../context/AuthContext';
 import api from '../services/api';
+import Toast from '../components/Toast';
 
 const ProfileScreen = ({ navigation }) => {
   const { user, setUser } = useContext(AuthContext);
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+  // Toast state
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('success');
   
   // Form states
   const [username, setUsername] = useState(user?.username || '');
@@ -26,13 +32,19 @@ const ProfileScreen = ({ navigation }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const showToast = (message, type = 'success') => {
+    setToastMessage(message);
+    setToastType(type);
+    setToastVisible(true);
+  };
+
   const handleUpdateProfile = async () => {
     try {
       setLoading(true);
 
       // Validation
       if (!username.trim() || !email.trim()) {
-        Alert.alert('Error', 'Username and email are required');
+        showToast('Username and email are required', 'error');
         setLoading(false);
         return;
       }
@@ -40,17 +52,17 @@ const ProfileScreen = ({ navigation }) => {
       // If changing password, validate
       if (newPassword) {
         if (!currentPassword) {
-          Alert.alert('Error', 'Please enter your current password');
+          showToast('Please enter your current password', 'error');
           setLoading(false);
           return;
         }
         if (newPassword.length < 6) {
-          Alert.alert('Error', 'New password must be at least 6 characters');
+          showToast('New password must be at least 6 characters', 'error');
           setLoading(false);
           return;
         }
         if (newPassword !== confirmPassword) {
-          Alert.alert('Error', 'New passwords do not match');
+          showToast('New passwords do not match', 'error');
           setLoading(false);
           return;
         }
@@ -71,8 +83,16 @@ const ProfileScreen = ({ navigation }) => {
       const response = await api.updateProfile(updateData);
 
       if (response.success) {
-        // Update user context
-        setUser(response.user);
+        // Update user context with the returned data
+        const updatedUser = response.data;
+        setUser(updatedUser);
+        
+        // Also update AsyncStorage
+        await AsyncStorage.setItem('user', JSON.stringify(updatedUser));
+        
+        // Update local state with new data
+        setUsername(updatedUser.username);
+        setEmail(updatedUser.email);
         
         // Clear password fields
         setCurrentPassword('');
@@ -80,16 +100,18 @@ const ProfileScreen = ({ navigation }) => {
         setConfirmPassword('');
         
         setEditing(false);
-        Alert.alert('Success', 'Profile updated successfully!');
+        showToast('Profile updated successfully!', 'success');
       }
 
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      Alert.alert(
-        'Error',
-        error.response?.data?.message || 'Failed to update profile'
-      );
+      console.log('Update profile error:', error);
+      console.log('Error response:', error.response?.data);
+      console.log('Error message:', error.message);
+      console.log('Error status:', error.response?.status);
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to update profile';
+      showToast(errorMessage, 'error');
     }
   };
 
@@ -105,6 +127,14 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Toast Notification */}
+      <Toast
+        visible={toastVisible}
+        message={toastMessage}
+        type={toastType}
+        onHide={() => setToastVisible(false)}
+      />
+      
       {/* Header */}
       <View style={[styles.header, { backgroundColor: 'transparent', borderBottomWidth: 0 }]}>
         <TouchableOpacity
