@@ -43,6 +43,11 @@ class ApiService {
     return response.data;
   }
 
+  async updateProfile(data) {
+    const response = await this.api.put('/auth/profile', data);
+    return response.data;
+  }
+
   // Modules methods
   async getModules(category = null) {
     const params = category ? { category } : {};
