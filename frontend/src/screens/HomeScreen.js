@@ -65,7 +65,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.welcomeCard}>
-          <Text style={[styles.greeting, { textAlign: 'center' }]}>Hi, {user?.username || 'John'}!</Text>
+          <Text style={[styles.greeting, { textAlign: 'center' }]}>Hi, {user?.username || 'User'}!</Text>
           <Text style={[styles.subtitle, { textAlign: 'center' }]}>Ready to grow your money smarts?</Text>
           <View style={styles.progressContainer}>
             <View style={styles.progressCircleWrapper}>
