@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, SafeAreaView, Modal } from 'react-native';
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, SafeAreaView, Modal, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../context/AuthContext';
 
@@ -7,13 +7,30 @@ const HomeScreen = ({ navigation }) => {
   const { user, logout } = useContext(AuthContext);
   const [menuVisible, setMenuVisible] = useState(false);
   const progressPercentage = user?.progress?.overallPercentage || 100;
+  const slideAnim = useRef(new Animated.Value(-300)).current;
+
+  useEffect(() => {
+    if (menuVisible) {
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(slideAnim, {
+        toValue: -300,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [menuVisible]);
 
   return (
     <SafeAreaView style={styles.container}>
       <Modal visible={menuVisible} transparent={true} animationType='fade' onRequestClose={() => setMenuVisible(false)}>
         <View style={styles.modalOverlay}>
           <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={() => setMenuVisible(false)} />
-          <View style={styles.drawer}>
+          <Animated.View style={[styles.drawer, { transform: [{ translateX: slideAnim }] }]}>
             <View style={styles.drawerHeader}>
               <Image source={require('../../assets/finwise-logo.png')} style={styles.drawerLogo} resizeMode='contain' />
               <Text style={styles.drawerTitle}>FinWise</Text>
@@ -28,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
                 <Text style={[styles.drawerItemText, { color: '#FF6B6B' }]}>Logout</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </Animated.View>
         </View>
       </Modal>
 
