@@ -60,10 +60,10 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.logoContainer}>
           <Image
             source={require('../../assets/finwise-logo.png')}
-            style={styles.logo}
+            style={[styles.logoSmall, { width: 120, height: 120 }]} 
             resizeMode="contain"
           />
-          <Text style={styles.appName}>FinWise</Text>
+         
         </View>
 
         {/* Form Card */}
