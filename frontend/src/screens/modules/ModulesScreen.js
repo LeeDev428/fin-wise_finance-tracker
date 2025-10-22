@@ -120,8 +120,8 @@ const ModulesScreen = ({ navigation }) => {
   };
 
   const getProgressPercentage = () => {
-    if (selectedCategory === 'Knowledge') return '33%';
-    if (selectedCategory === 'Attitude') return '66%';
+    if (selectedCategory === 'Knowledge') return '33.3%';
+    if (selectedCategory === 'Attitude') return '66.3%';
     if (selectedCategory === 'Behavior') return '100%';
     return '0%';
   };
