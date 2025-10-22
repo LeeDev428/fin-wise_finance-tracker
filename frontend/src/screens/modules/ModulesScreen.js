@@ -119,6 +119,13 @@ const ModulesScreen = ({ navigation }) => {
     return module.icon || '✏️';
   };
 
+  const getProgressPercentage = () => {
+    if (selectedCategory === 'Knowledge') return '33%';
+    if (selectedCategory === 'Attitude') return '66%';
+    if (selectedCategory === 'Behavior') return '100%';
+    return '0%';
+  };
+
   const handleModulePress = (module) => {
     if (selectedCategory === 'Knowledge' && module.moduleNumber <= 10) {
       // Navigate to the specific knowledge module
@@ -153,7 +160,7 @@ const ModulesScreen = ({ navigation }) => {
         {/* Progress Bar */}
         <View style={styles.progressBarContainer}>
           <View style={styles.progressBarBackground}>
-            <View style={[styles.progressBarFill, { width: '66%' }]} />
+            <View style={[styles.progressBarFill, { width: getProgressPercentage() }]} />
           </View>
         </View>
 
