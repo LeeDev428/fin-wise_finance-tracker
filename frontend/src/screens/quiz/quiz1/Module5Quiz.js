@@ -258,7 +258,7 @@ const Module5Quiz = ({ navigation }) => {
           ]}>
             <Text style={styles.feedbackText}>
               {selectedAnswer === questions[currentQuestion].answer 
-                ? '✓ Correct! That's the best deal.' 
+                ? '✓ Correct! That\'s the best deal.' 
                 : `✗ Wrong! Option ${questions[currentQuestion].answer} is cheaper.`}
             </Text>
           </View>
