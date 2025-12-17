@@ -37,19 +37,38 @@ const Module2Quiz = ({ navigation }) => {
     { emoji: "☹️", label: "Poorer", value: "☹️" },
   ];
 
-  const handleAnswer = (answer) => {
-    setSelectedAnswer(answer);
+  const handleAnswer = async (emoji) => {
+    setSelectedAnswer(emoji);
     
-    if (answer === questions[currentQuestion].answer) {
-      setScore(score + 1);
+    const newScore = emoji === questions[currentQuestion].correctEmoji ? score + 1 : score;
+    if (emoji === questions[currentQuestion].correctEmoji) {
+      setScore(newScore);
     }
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (currentQuestion + 1 < questions.length) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedAnswer(null);
       } else {
         setShowResult(true);
+        // Submit result
+        try {
+          const finalScore = emoji === questions[currentQuestion].correctEmoji ? newScore : score;
+          const percentage = ((finalScore / questions.length) * 100).toFixed(0);
+          await ApiService.submitQuizResult({
+            quizId: 'quiz1-module2',
+            quizNumber: 1,
+            moduleName: 'Emoji Reaction',
+            category: 'Attitude',
+            score: finalScore,
+            totalQuestions: questions.length,
+            percentage: parseFloat(percentage),
+            passed: percentage >= 70,
+            timeTaken: 0,
+          });
+        } catch (error) {
+          console.error('Error submitting quiz result:', error);
+        }
       }
     }, 800);
   };
