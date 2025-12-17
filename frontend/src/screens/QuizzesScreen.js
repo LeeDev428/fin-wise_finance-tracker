@@ -19,29 +19,10 @@ const QuizzesScreen = ({ navigation }) => {
   const { token } = useContext(AuthContext);
 
   useEffect(() => {
-    loadQuizzes();
+    // Use local quiz data instead of API
+    setQuizzes(getDefaultQuizzes());
+    setLoading(false);
   }, [selectedCategory]);
-
-  const loadQuizzes = async () => {
-    try {
-      setLoading(true);
-      ApiService.setAuthToken(token);
-      const response = await ApiService.getQuizzes(selectedCategory);
-      
-      // If no quizzes from API, use default data
-      if (response.data.length === 0) {
-        setQuizzes(getDefaultQuizzes());
-      } else {
-        setQuizzes(response.data);
-      }
-    } catch (error) {
-      console.error('Error loading quizzes:', error);
-      // Use default quizzes if API fails
-      setQuizzes(getDefaultQuizzes());
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getDefaultQuizzes = () => {
     return [
@@ -174,6 +155,7 @@ const QuizzesScreen = ({ navigation }) => {
               <TouchableOpacity
                 key={quiz._id || index}
                 style={styles.quizCard}
+                onPress={() => handleQuizPress(quiz.quizNumber)}
               >
                 <View style={styles.quizIcon}>
                   <Text style={styles.quizEmoji}>
