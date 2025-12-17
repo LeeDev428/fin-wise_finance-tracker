@@ -44,6 +44,14 @@ import BehaviorModule3 from '../screens/modules/behavior/BehaviorModule3';
 import BehaviorModule4 from '../screens/modules/behavior/BehaviorModule4';
 import BehaviorModule5 from '../screens/modules/behavior/BehaviorModule5';
 
+// Quiz Screens
+import Quiz1Selection from '../screens/quiz/quiz1/Quiz1Selection';
+import Module1Quiz from '../screens/quiz/quiz1/Module1Quiz';
+import Module2Quiz from '../screens/quiz/quiz1/Module2Quiz';
+import Module3Quiz from '../screens/quiz/quiz1/Module3Quiz';
+import Module4Quiz from '../screens/quiz/quiz1/Module4Quiz';
+import Module5Quiz from '../screens/quiz/quiz1/Module5Quiz';
+
 import colors from '../constants/colors';
 
 const Stack = createNativeStackNavigator();
@@ -108,6 +116,14 @@ const MainNavigator = () => {
           <Stack.Screen name="BehaviorModule3" component={BehaviorModule3} />
           <Stack.Screen name="BehaviorModule4" component={BehaviorModule4} />
           <Stack.Screen name="BehaviorModule5" component={BehaviorModule5} />
+          
+          {/* Quiz Screens - Quiz 1 Modules */}
+          <Stack.Screen name="Quiz1Selection" component={Quiz1Selection} />
+          <Stack.Screen name="Module1Quiz" component={Module1Quiz} />
+          <Stack.Screen name="Module2Quiz" component={Module2Quiz} />
+          <Stack.Screen name="Module3Quiz" component={Module3Quiz} />
+          <Stack.Screen name="Module4Quiz" component={Module4Quiz} />
+          <Stack.Screen name="Module5Quiz" component={Module5Quiz} />
         </>
       )}
     </Stack.Navigator>
