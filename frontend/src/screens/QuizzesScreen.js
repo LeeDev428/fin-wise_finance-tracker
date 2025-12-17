@@ -5,9 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
   ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../context/AuthContext';
 import ApiService from '../services/api';
 import colors from '../constants/colors';
@@ -77,8 +77,18 @@ const QuizzesScreen = ({ navigation }) => {
     return icons[quizNumber - 1] || '✏️';
   };
 
+  const handleQuizPress = (quizNumber) => {
+    // Navigate to quiz selection screen for Quiz 1
+    if (quizNumber === 1 && selectedCategory === 'Knowledge') {
+      navigation.navigate('Quiz1Selection');
+    } else {
+      // For other quizzes, show coming soon message
+      alert('Coming Soon', `Quiz #${quizNumber} will be available soon!`);
+    }
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <ScrollView style={styles.scrollView}>
         {/* Header */}
         <View style={styles.header}>
@@ -154,7 +164,8 @@ const QuizzesScreen = ({ navigation }) => {
         </View>
 
         {/* Quizzes List */}
-        {loading ? (
+        {loadi  onPress={() => handleQuizPress(quiz.quizNumber)}
+              ng ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={colors.accent} />
           </View>
