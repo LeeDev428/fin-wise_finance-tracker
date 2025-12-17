@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../../constants/colors';
+import ApiService from '../../../services/api';
 
 const Module5Quiz = ({ navigation }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
