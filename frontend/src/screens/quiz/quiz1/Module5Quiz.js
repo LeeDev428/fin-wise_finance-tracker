@@ -133,19 +133,38 @@ const Module5Quiz = ({ navigation }) => {
     },
   ];
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = async (answer) => {
     setSelectedAnswer(answer);
     
+    const newScore = answer === questions[currentQuestion].answer ? score + 1 : score;
     if (answer === questions[currentQuestion].answer) {
-      setScore(score + 1);
+      setScore(newScore);
     }
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (currentQuestion + 1 < questions.length) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedAnswer(null);
       } else {
         setShowResult(true);
+        // Submit result to backend
+        try {
+          const finalScore = answer === questions[currentQuestion].answer ? newScore : score;
+          const percentage = ((finalScore / questions.length) * 100).toFixed(0);
+          await ApiService.submitQuizResult({
+            quizId: 'quiz1-module5',
+            quizNumber: 1,
+            moduleName: 'Best Deal',
+            category: 'Behavior',
+            score: finalScore,
+            totalQuestions: questions.length,
+            percentage: parseFloat(percentage),
+            passed: percentage >= 70,
+            timeTaken: 0,
+          });
+        } catch (error) {
+          console.error('Error submitting quiz result:', error);
+        }
       }
     }, 1000);
   };
