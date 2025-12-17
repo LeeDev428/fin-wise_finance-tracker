@@ -10,6 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../../constants/colors';
+import ApiService from '../../../services/api';
 
 const Module1Quiz = ({ navigation }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -35,21 +36,43 @@ const Module1Quiz = ({ navigation }) => {
     { id: 15, statement: "Prices never decrease once they go up.", answer: "Myth" },
   ];
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = async (answer) => {
     setSelectedAnswer(answer);
     
     // Check if answer is correct
+    const newScore = answer === questions[currentQuestion].answer ? score + 1 : score;
     if (answer === questions[currentQuestion].answer) {
-      setScore(score + 1);
+      setScore(newScore);
     }
 
     // Move to next question after a short delay
-    setTimeout(() => {
+    setTimeout(async () => {
       if (currentQuestion + 1 < questions.length) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedAnswer(null);
       } else {
         setShowResult(true);
+        // Submit result to backend
+        try {
+          const totalQuestions = questions.length;
+          const finalScore = answer === questions[currentQuestion].answer ? newScore : score;
+          const percentage = ((finalScore / totalQuestions) * 100).toFixed(0);
+          const passed = percentage >= 70;
+          
+          await ApiService.submitQuizResult({
+            quizId: 'quiz1-module1',
+            quizNumber: 1,
+            moduleName: 'Truth or Myth',
+            category: 'Knowledge',
+            score: finalScore,
+            totalQuestions: totalQuestions,
+            percentage: parseFloat(percentage),
+            passed: passed,
+            timeTaken: 0,
+          });
+        } catch (error) {
+          console.error('Error submitting quiz result:', error);
+        }
       }
     }, 800);
   };
