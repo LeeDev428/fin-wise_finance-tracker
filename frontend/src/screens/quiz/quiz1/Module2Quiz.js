@@ -41,8 +41,8 @@ const Module2Quiz = ({ navigation }) => {
   const handleAnswer = async (emoji) => {
     setSelectedAnswer(emoji);
     
-    const newScore = emoji === questions[currentQuestion].correctEmoji ? score + 1 : score;
-    if (emoji === questions[currentQuestion].correctEmoji) {
+    const newScore = emoji === questions[currentQuestion].answer ? score + 1 : score;
+    if (emoji === questions[currentQuestion].answer) {
       setScore(newScore);
     }
 
@@ -54,7 +54,7 @@ const Module2Quiz = ({ navigation }) => {
         setShowResult(true);
         // Submit result to backend
         try {
-          const finalScore = emoji === questions[currentQuestion].correctEmoji ? newScore : score;
+          const finalScore = emoji === questions[currentQuestion].answer ? newScore : score;
           const percentage = ((finalScore / questions.length) * 100).toFixed(0);
           await ApiService.submitQuizResult({
             quizId: 'quiz1-module2',
