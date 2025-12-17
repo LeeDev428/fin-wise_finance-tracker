@@ -59,11 +59,13 @@ const QuizzesScreen = ({ navigation }) => {
   };
 
   const handleQuizPress = (quizNumber) => {
-    // Navigate to quiz selection screen
-    if (quizNumber === 1 && selectedCategory === 'Knowledge') {
+    // Navigate based on quiz number and category
+    if (quizNumber === 1) {
       navigation.navigate('Quiz1Selection');
-    } else if (quizNumber === 2 && selectedCategory === 'Attitude') {
+    } else if (quizNumber === 2) {
       navigation.navigate('Quiz2Selection');
+    } else if (quizNumber === 3) {
+      navigation.navigate('Quiz3Selection');
     } else {
       // For other quizzes, show coming soon message
       alert('Coming Soon', `Quiz #${quizNumber} will be available soon!`);
