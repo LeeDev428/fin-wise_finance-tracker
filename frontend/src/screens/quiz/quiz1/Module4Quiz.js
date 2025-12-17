@@ -80,19 +80,38 @@ const Module4Quiz = ({ navigation }) => {
     },
   ];
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = async (answer) => {
     setSelectedAnswer(answer);
     
+    const newScore = answer === questions[currentQuestion].redFlag ? score + 1 : score;
     if (answer === questions[currentQuestion].redFlag) {
-      setScore(score + 1);
+      setScore(newScore);
     }
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (currentQuestion + 1 < questions.length) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedAnswer(null);
       } else {
         setShowResult(true);
+        // Submit result to backend
+        try {
+          const finalScore = answer === questions[currentQuestion].redFlag ? newScore : score;
+          const percentage = ((finalScore / questions.length) * 100).toFixed(0);
+          await ApiService.submitQuizResult({
+            quizId: 'quiz1-module4',
+            quizNumber: 1,
+            moduleName: 'Pick Red Flag',
+            category: 'Behavior',
+            score: finalScore,
+            totalQuestions: questions.length,
+            percentage: parseFloat(percentage),
+            passed: percentage >= 70,
+            timeTaken: 0,
+          });
+        } catch (error) {
+          console.error('Error submitting quiz result:', error);
+        }
       }
     }, 1000);
   };
