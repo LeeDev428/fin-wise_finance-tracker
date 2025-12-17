@@ -59,9 +59,11 @@ const QuizzesScreen = ({ navigation }) => {
   };
 
   const handleQuizPress = (quizNumber) => {
-    // Navigate to quiz selection screen for Quiz 1
+    // Navigate to quiz selection screen
     if (quizNumber === 1 && selectedCategory === 'Knowledge') {
       navigation.navigate('Quiz1Selection');
+    } else if (quizNumber === 2 && selectedCategory === 'Attitude') {
+      navigation.navigate('Quiz2Selection');
     } else {
       // For other quizzes, show coming soon message
       alert('Coming Soon', `Quiz #${quizNumber} will be available soon!`);
