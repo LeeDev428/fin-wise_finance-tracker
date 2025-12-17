@@ -44,13 +44,21 @@ import BehaviorModule3 from '../screens/modules/behavior/BehaviorModule3';
 import BehaviorModule4 from '../screens/modules/behavior/BehaviorModule4';
 import BehaviorModule5 from '../screens/modules/behavior/BehaviorModule5';
 
-// Quiz Screens
+// Quiz Screens - Quiz 1
 import Quiz1Selection from '../screens/quiz/quiz1/Quiz1Selection';
 import Module1Quiz from '../screens/quiz/quiz1/Module1Quiz';
 import Module2Quiz from '../screens/quiz/quiz1/Module2Quiz';
 import Module3Quiz from '../screens/quiz/quiz1/Module3Quiz';
 import Module4Quiz from '../screens/quiz/quiz1/Module4Quiz';
 import Module5Quiz from '../screens/quiz/quiz1/Module5Quiz';
+
+// Quiz Screens - Quiz 2
+import Quiz2Selection from '../screens/quiz/quiz2/Quiz2Selection';
+import Quiz2Module1 from '../screens/quiz/quiz2/Module1Quiz';
+import Quiz2Module2 from '../screens/quiz/quiz2/Module2Quiz';
+import Quiz2Module3 from '../screens/quiz/quiz2/Module3Quiz';
+import Quiz2Module4 from '../screens/quiz/quiz2/Module4Quiz';
+import Quiz2Module5 from '../screens/quiz/quiz2/Module5Quiz';
 
 import colors from '../constants/colors';
 
@@ -124,6 +132,14 @@ const MainNavigator = () => {
           <Stack.Screen name="Module3Quiz" component={Module3Quiz} />
           <Stack.Screen name="Module4Quiz" component={Module4Quiz} />
           <Stack.Screen name="Module5Quiz" component={Module5Quiz} />
+          
+          {/* Quiz Screens - Quiz 2 Modules */}
+          <Stack.Screen name="Quiz2Selection" component={Quiz2Selection} />
+          <Stack.Screen name="Quiz2Module1" component={Quiz2Module1} />
+          <Stack.Screen name="Quiz2Module2" component={Quiz2Module2} />
+          <Stack.Screen name="Quiz2Module3" component={Quiz2Module3} />
+          <Stack.Screen name="Quiz2Module4" component={Quiz2Module4} />
+          <Stack.Screen name="Quiz2Module5" component={Quiz2Module5} />
         </>
       )}
     </Stack.Navigator>
