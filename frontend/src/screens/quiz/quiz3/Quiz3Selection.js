@@ -53,8 +53,13 @@ const Quiz3Selection = ({ navigation }) => {
         <View style={styles.placeholder} />
       </View>
 
-      <ScrollView style={styles.content}>
-        <Text style={styles.subtitle}>Select a module to begin</Text>
+      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
+        <View style={styles.introCard}>
+          <Text style={styles.introTitle}>Choose a Module</Text>
+          <Text style={styles.introText}>
+            Complete all 5 modules to master financial behavior!
+          </Text>
+        </View>
 
         <View style={styles.modulesContainer}>
           {modules.map((module) => (
@@ -104,13 +109,31 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
   },
-  subtitle: {
-    fontSize: 16,
+  contentContainer: {
+    padding: 20,
+  },
+  introCard: {
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 25,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  introTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: colors.textPrimary,
+    marginBottom: 10,
+  },
+  introText: {
+    fontSize: 15,
     color: colors.textSecondary,
-    marginBottom: 20,
-    textAlign: 'center',
+    lineHeight: 22,
   },
   modulesContainer: {
     gap: 15,
