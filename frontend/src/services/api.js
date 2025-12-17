@@ -87,6 +87,27 @@ class ApiService {
     return response.data;
   }
 
+  // Quiz Results methods
+  async submitQuizResult(resultData) {
+    const response = await this.api.post('/quiz-results', resultData);
+    return response.data;
+  }
+
+  async getQuizResults() {
+    const response = await this.api.get('/quiz-results');
+    return response.data;
+  }
+
+  async getQuizResult(quizId) {
+    const response = await this.api.get(`/quiz-results/${quizId}`);
+    return response.data;
+  }
+
+  async getQuizStats() {
+    const response = await this.api.get('/quiz-results/stats/summary');
+    return response.data;
+  }
+
   // Progress methods
   async getProgress() {
     const response = await this.api.get('/progress');
