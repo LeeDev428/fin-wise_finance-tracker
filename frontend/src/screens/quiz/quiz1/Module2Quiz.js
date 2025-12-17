@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../../constants/colors';
+import ApiService from '../../../services/api';
 
 const Module2Quiz = ({ navigation }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -51,7 +52,7 @@ const Module2Quiz = ({ navigation }) => {
         setSelectedAnswer(null);
       } else {
         setShowResult(true);
-        // Submit result
+        // Submit result to backend
         try {
           const finalScore = emoji === questions[currentQuestion].correctEmoji ? newScore : score;
           const percentage = ((finalScore / questions.length) * 100).toFixed(0);
