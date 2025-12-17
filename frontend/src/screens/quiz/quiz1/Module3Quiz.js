@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { PanGestureHandler } from 'react-native-gesture-handler';
 import colors from '../../../constants/colors';
+import ApiService from '../../../services/api';
 
 const Module3Quiz = ({ navigation }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -32,43 +33,42 @@ const Module3Quiz = ({ navigation }) => {
     { id: 10, statement: "An index fund grows slowly with small bumps but no big swings.", answer: "STEADY" },
   ];
 
-  const handleSwipe = (direction) => {
+  const handleSwipe = async (direction) => {
     const answer = direction === 'right' ? 'STEADY' : 'VOLATILE';
     setSelectedAnswer(answer);
     
+    const newScore = answer === questions[currentQuestion].answer ? score + 1 : score;
     if (answer === questions[currentQuestion].answer) {
-      setScore(score + 1);
+      setScore(newScore);
     }
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (currentQuestion + 1 < questions.length) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedAnswer(null);
         translateX.setValue(0);
       } else {
         setShowResult(true);
+        // Submit result to backend
+        try {
+          const finalScore = answer === questions[currentQuestion].answer ? newScore : score;
+          const percentage = ((finalScore / questions.length) * 100).toFixed(0);
+          await ApiService.submitQuizResult({
+            quizId: 'quiz1-module3',
+            quizNumber: 1,
+            moduleName: 'Steady or Volatile',
+            category: 'Behavior',
+            score: finalScore,
+            totalQuestions: questions.length,
+            percentage: parseFloat(percentage),
+            passed: percentage >= 70,
+            timeTaken: 0,
+          });
+        } catch (error) {
+          console.error('Error submitting quiz result:', error);
+        }
       }
     }, 800);
-  };
-
-  const onGestureEvent = Animated.event(
-    [{ nativeEvent: { translationX: translateX } }],
-    { useNativeDriver: true }
-  );
-
-  const onHandlerStateChange = (event) => {
-    if (event.nativeEvent.state === 5) { // State.END
-      const { translationX } = event.nativeEvent;
-      
-      if (Math.abs(translationX) > 100) {
-        handleSwipe(translationX > 0 ? 'right' : 'left');
-      } else {
-        Animated.spring(translateX, {
-          toValue: 0,
-          useNativeDriver: true,
-        }).start();
-      }
-    }
   };
 
   const restartQuiz = () => {
@@ -158,33 +158,13 @@ const Module3Quiz = ({ navigation }) => {
           </View>
         </View>
 
-        <PanGestureHandler
-          onGestureEvent={onGestureEvent}
-          onHandlerStateChange={onHandlerStateChange}
-        >
-          <Animated.View
-            style={[
-              styles.cardContainer,
-              {
-                transform: [
-                  { translateX: translateX },
-                  {
-                    rotate: translateX.interpolate({
-                      inputRange: [-200, 0, 200],
-                      outputRange: ['-15deg', '0deg', '15deg'],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          >
-            <View style={styles.questionCard}>
-              <Text style={styles.questionNumber}>Statement {currentQuestion + 1}</Text>
-              <Text style={styles.questionText}>{questions[currentQuestion].statement}</Text>
-              <Text style={styles.swipeHint}>👆 Swipe left or right, or tap below</Text>
-            </View>
-          </Animated.View>
-        </PanGestureHandler>
+        <View style={styles.cardContainer}>
+          <View style={styles.questionCard}>
+            <Text style={styles.questionNumber}>Statement {currentQuestion + 1}</Text>
+            <Text style={styles.questionText}>{questions[currentQuestion].statement}</Text>
+            <Text style={styles.swipeHint}>👆 Tap below to choose</Text>
+          </View>
+        </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
