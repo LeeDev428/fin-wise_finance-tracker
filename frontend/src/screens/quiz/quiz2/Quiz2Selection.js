@@ -53,11 +53,13 @@ const Quiz2Selection = ({ navigation }) => {
         <View style={styles.placeholder} />
       </View>
 
-      <ScrollView style={styles.scrollView}>
-        <Text style={styles.subtitle}>Financial Attitude Quizzes</Text>
-        <Text style={styles.description}>
-          Test your understanding of financial attitudes and behaviors
-        </Text>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
+        <View style={styles.introCard}>
+          <Text style={styles.introTitle}>Choose a Module</Text>
+          <Text style={styles.introText}>
+            Complete all 5 modules to master financial attitude!
+          </Text>
+        </View>
 
         <View style={styles.modulesContainer}>
           {modules.map((module) => (
@@ -107,19 +109,31 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    paddingHorizontal: 20,
   },
-  subtitle: {
-    fontSize: 24,
+  contentContainer: {
+    padding: 20,
+  },
+  introCard: {
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 25,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  introTitle: {
+    fontSize: 22,
     fontWeight: 'bold',
     color: colors.textPrimary,
-    marginTop: 10,
-    marginBottom: 8,
+    marginBottom: 10,
   },
-  description: {
-    fontSize: 14,
+  introText: {
+    fontSize: 15,
     color: colors.textSecondary,
-    marginBottom: 24,
+    lineHeight: 22,
   },
   modulesContainer: {
     gap: 16,
