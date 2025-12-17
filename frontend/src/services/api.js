@@ -25,6 +25,21 @@ class ApiService {
         return Promise.reject(error);
       }
     );
+
+    // Add response interceptor to handle token expiration
+    this.api.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        if (error.response?.status === 401) {
+          // Token expired or invalid - clear it
+          await AsyncStorage.removeItem('token');
+          await AsyncStorage.removeItem('user');
+          // Optionally redirect to login - for now just log
+          console.log('Token expired. Please log in again.');
+        }
+        return Promise.reject(error);
+      }
+    );
   }
 
   setAuthToken(token) {
