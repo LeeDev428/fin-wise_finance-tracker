@@ -164,8 +164,7 @@ const QuizzesScreen = ({ navigation }) => {
         </View>
 
         {/* Quizzes List */}
-        {loadi  onPress={() => handleQuizPress(quiz.quizNumber)}
-              ng ? (
+        {loading ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={colors.accent} />
           </View>
