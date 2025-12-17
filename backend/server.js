@@ -23,6 +23,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/modules', require('./routes/modules'));
 app.use('/api/quizzes', require('./routes/quizzes'));
 app.use('/api/progress', require('./routes/progress'));
+app.use('/api/quiz-results', require('./routes/quizResults'));
 
 // Root route
 app.get('/', (req, res) => {
